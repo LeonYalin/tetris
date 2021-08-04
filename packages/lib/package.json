@@ -1,0 +1,8 @@
+{
+  "name": "@tetris-game/lib",
+  "version": "1.0.0",
+  "description": "Lib section for the tetris game",
+  "main": "index.js",
+  "author": "Leon Yalin",
+  "license": "MIT"
+}

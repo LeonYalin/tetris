@@ -12,5 +12,9 @@
   ],
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "start:all": "lerna run start --stream",
+    "start": "lerna exec --scope @tetris-game/client -- yarn start"
   }
 }
