@@ -7,9 +7,10 @@
   "author": "Leon Yalin <l.yalin@agentvi.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": ["**/client", "**/client/**"]
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   },

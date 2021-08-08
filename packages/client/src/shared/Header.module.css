@@ -1,0 +1,8 @@
+.appLogo {
+  height: 30px;
+}
+
+.headerToolbar {
+  display: flex;
+  justify-content: space-between;
+}
