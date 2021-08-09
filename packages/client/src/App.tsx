@@ -6,28 +6,27 @@ import './App.css';
 import { AppPage } from './enums/appPage';
 import Header from './shared/Header';
 
-// lazy load
-const GamePage = React.lazy(() => import('./pages/GamePage'));
-const MainPage = React.lazy(() => import('./pages/MainPage'));
-const StatsPage = React.lazy(() => import('./pages/StatsPage'));
-
 const routes: RouteConfig[] = [
   {
     path: '/game',
-    component: GamePage,
+    component: React.lazy(() => import('./pages/GamePage')),
   },
   {
     path: '/stats',
-    component: StatsPage,
+    component: React.lazy(() => import('./pages/StatsPage')),
+  },
+  {
+    path: '/options',
+    component: React.lazy(() => import('./pages/OptionsPage')),
   },
   {
     path: '/',
-    component: MainPage,
+    component: React.lazy(() => import('./pages/MainPage')),
   },
 ];
 
 export default function App() {
-  const [page, setPage] = useState<AppPage>(AppPage.MAIN_PAGE);
+  const [page, setPage] = useState<AppPage>(AppPage.MAIN);
 
   return (
     <div className="App">

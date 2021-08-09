@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"workbench.colorCustomizations": {
-		"statusBar.background": "#6e0313"
+		"statusBar.background": "#92414d"
 		},
     "search.exclude": {
       "**/.git": true,
