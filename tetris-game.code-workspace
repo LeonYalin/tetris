@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+		"statusBar.background": "#6e0313"
+		},
+    "search.exclude": {
+      "**/.git": true,
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/dist": true,
+      "**/e2e": true,
+      "**/assets/walkme": true,
+  },
+	}
+}
