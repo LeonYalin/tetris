@@ -5,12 +5,17 @@ import EqualizerTwoToneIcon from '@material-ui/icons/EqualizerTwoTone';
 import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
 import { useHistory } from 'react-router-dom';
 import { AppPage } from '../enums/appPage';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
+import { useContext } from 'react';
+import { DispatchContext } from '../store/StoreProvider';
+import { setPage } from '../store/actions/main.actions';
 
-export default function MainPage() {
+function MainPage() {
   const history = useHistory();
+  const dispatch = useContext(DispatchContext);
 
   function handleClick(e: MouseEvent<HTMLButtonElement>, page: AppPage) {
+    dispatch(setPage(page));
     history.push(`/${page}`);
   }
 
@@ -57,3 +62,5 @@ export default function MainPage() {
     </div>
   );
 }
+
+export default memo(MainPage);

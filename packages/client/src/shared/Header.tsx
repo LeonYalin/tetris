@@ -1,18 +1,21 @@
 import { AppBar, Button, Toolbar } from '@material-ui/core';
-import React from 'react';
-import { AppPage } from '../enums/appPage';
+import React, { memo } from 'react';
 import styles from './Header.module.css';
+import { useAppState } from '../store/StoreProvider';
+import { selectMainPage } from '../store/selectors/main.selectors';
 
-type HeaderProps = {
-  page: AppPage | undefined;
-};
+// type HeaderProps = {
+//   page: AppPage | undefined;
+// };
 
-export default function Header({ page }: HeaderProps) {
+function Header() {
+  const page = selectMainPage(useAppState());
   return (
     <AppBar position="static">
       <Toolbar className={styles.headerToolbar}>
         <div className="left">
           <img className={styles.appLogo} src="/tetris_logo.png" alt="Tetris logo" />
+          {page}
         </div>
         <div className="right">
           <Button color="primary">Login</Button>
@@ -21,3 +24,5 @@ export default function Header({ page }: HeaderProps) {
     </AppBar>
   );
 }
+
+export default memo(Header);
