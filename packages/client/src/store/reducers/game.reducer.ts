@@ -4,22 +4,22 @@ import { AppState } from '.';
 import * as gameActions from '../actions/game.actions';
 
 export interface GameState {
-  started: boolean;
+  level: number;
+  score: number;
+  next: string;
 }
 
 export const gameInitialState: GameState = {
-  started: false,
+  level: 1,
+  score: 0,
+  next: 'Figure ^',
 };
 
 export const gameReducer: Reducer<AppState, gameActions.AllActionTypes> = (state, action) => {
   switch (action.type) {
-    case gameActions.ActionType.START_GAME:
+    case gameActions.ActionType.INC_LEVEL:
       return produce(state, draft => {
-        draft.game.started = true;
-      });
-    case gameActions.ActionType.END_GAME:
-      return produce(state, draft => {
-        draft.game.started = true;
+        draft.game.level += 1;
       });
     default:
       return state;

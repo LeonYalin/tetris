@@ -1,34 +1,34 @@
 import { Button } from '@material-ui/core';
-import styles from './MainPage.module.css';
 import PlayCircleFilledTwoToneIcon from '@material-ui/icons/PlayCircleFilledTwoTone';
 import EqualizerTwoToneIcon from '@material-ui/icons/EqualizerTwoTone';
 import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
 import { useHistory } from 'react-router-dom';
-import { AppPage } from '../enums/appPage';
+import { AppPage } from '../../enums/appPage';
 import { MouseEvent, memo } from 'react';
 import { useContext } from 'react';
-import { DispatchContext } from '../store/StoreProvider';
-import { setPage } from '../store/actions/main.actions';
+import { DispatchContext } from '../../store/StoreProvider';
+import * as homeActions from '../../store/actions/home.actions';
+import classes from './HomeMain.module.css';
 
 function MainPage() {
   const history = useHistory();
   const dispatch = useContext(DispatchContext);
 
   function handleClick(e: MouseEvent<HTMLButtonElement>, page: AppPage) {
-    dispatch(setPage(page));
+    dispatch(homeActions.setPage(page));
     history.push(`/${page}`);
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classes.wrapper}>
       <div>
-        <img className={styles.appLogo} src="/tetris_logo.png" alt="Tetris logo" />
+        <img className={classes.appLogo} src="/tetris_logo.png" alt="Tetris logo" />
       </div>
-      <div className={styles.instructions}>
+      <div className={classes.instructions}>
         Welcome to the Tetris Game!
-        <div className={styles.menuButtonWrapper}>
+        <div className={classes.menuButtonWrapper}>
           <Button
-            className={styles.menuButton}
+            className={classes.menuButton}
             onClick={e => handleClick(e, AppPage.GAME)}
             variant="contained"
             color="primary"
@@ -38,7 +38,7 @@ function MainPage() {
             Start Game
           </Button>
           <Button
-            className={styles.menuButton}
+            className={classes.menuButton}
             onClick={e => handleClick(e, AppPage.OPTIONS)}
             variant="contained"
             color="default"
@@ -48,7 +48,7 @@ function MainPage() {
             Options
           </Button>
           <Button
-            className={styles.menuButton}
+            className={classes.menuButton}
             onClick={e => handleClick(e, AppPage.STATS)}
             variant="contained"
             color="default"

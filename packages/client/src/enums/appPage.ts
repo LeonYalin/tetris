@@ -1,5 +1,5 @@
 export enum AppPage {
-  MAIN = 'main',
+  HOME = 'home',
   GAME = 'game',
   STATS = 'stats',
   OPTIONS = 'options',

@@ -1,6 +1,6 @@
 import { Reducer } from 'use-immer';
 import { gameInitialState, gameReducer, GameState } from './game.reducer';
-import { mainInitialState, mainReducer, MainState } from './main.reducer';
+import { mainInitialState, homeReducer, HomeState } from './home.reducer';
 
 export interface Action {
   type: string | undefined;
@@ -8,7 +8,7 @@ export interface Action {
 }
 
 export interface AppState {
-  main: MainState;
+  home: HomeState;
   game: GameState;
 }
 
@@ -25,11 +25,11 @@ const combineReducers = <S, A>(reducers: { [key: string]: Reducer }): ((state: S
 };
 
 export const appInitialState: AppState = {
-  main: mainInitialState,
+  home: mainInitialState,
   game: gameInitialState,
 };
 
 export const reducer = combineReducers<AppState, Action>({
-  main: mainReducer,
+  home: homeReducer,
   game: gameReducer,
 });
