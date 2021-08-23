@@ -8,11 +8,17 @@
   "license": "MIT",
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"],
-    "nohoist": ["**/client", "**/client/**"]
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/client",
+      "**/client/**"
+    ]
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "typescript": "^4.3.5"
   },
   "scripts": {
     "start:all": "lerna run start --stream",

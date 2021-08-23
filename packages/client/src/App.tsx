@@ -28,6 +28,7 @@ const routes: RouteConfig[] = [
 function App() {
   const history = useHistory();
   history.push(`/${AppPage.GAME}`);
+
   return (
     <StoreProvider>
       <div className="App">

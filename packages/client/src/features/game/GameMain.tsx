@@ -5,6 +5,7 @@ import { useAppState } from '../../store/StoreProvider';
 import GameCenterSection from './GameCenterSection';
 import GameLeftSection from './GameLeftSection';
 import GameRightSection from './GameRightSection';
+import { gameManager } from '@tetris-game/lib/src';
 
 const useStyles = createUseStyles({
   wrapper: {
@@ -37,6 +38,7 @@ const useStyles = createUseStyles({
 function GamePage() {
   const { level, score, next } = selectGameState(useAppState());
   const classes = useStyles();
+  gameManager().startGame();
   return (
     <div className={classes.wrapper}>
       <div className={classes.gameWrapper}>
