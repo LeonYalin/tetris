@@ -6,5 +6,5 @@ export enum ActionType {
 }
 
 export const setPage = (page: AppPage) => ({ type: ActionType.SET_PAGE, payload: page });
-type allTypes = typeof setPage;
-export type AllActionsTypes = ReturnType<allTypes>;
+type allTypes = ReturnType<typeof setPage>;
+export type AllActionsTypes = allTypes;

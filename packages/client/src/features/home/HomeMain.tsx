@@ -5,14 +5,45 @@ import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
 import { useHistory } from 'react-router-dom';
 import { AppPage } from '../../enums/appPage';
 import { MouseEvent, memo } from 'react';
-import { useContext } from 'react';
-import { DispatchContext } from '../../store/StoreProvider';
+import { useAppDispatch } from '../../store/StoreProvider';
 import * as homeActions from '../../store/actions/home.actions';
-import classes from './HomeMain.module.css';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+  appLogo: {
+    height: '200px',
+  },
+  wrapper: {
+    height: 'calc(100% - 64px)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  instructions: {
+    textAlign: 'center',
+    fontSize: '30px',
+    lineHeight: '44px',
+    color: '#434343',
+  },
+  menuButtonWrapper: {
+    marginTop: '30px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuButton: {
+    justifyContent: 'flex-start !important',
+    width: '200px',
+    margin: '5px !important',
+  },
+});
 
 function MainPage() {
+  const classes = useStyles();
   const history = useHistory();
-  const dispatch = useContext(DispatchContext);
+  const dispatch = useAppDispatch();
 
   function handleClick(e: MouseEvent<HTMLButtonElement>, page: AppPage) {
     dispatch(homeActions.setPage(page));

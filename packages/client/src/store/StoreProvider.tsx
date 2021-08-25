@@ -21,3 +21,7 @@ export default memo(StoreProvider);
 export function useAppState() {
   return useContext(StateContext);
 }
+
+export function useAppDispatch() {
+  return useContext(DispatchContext);
+}

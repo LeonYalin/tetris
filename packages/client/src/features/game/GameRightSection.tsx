@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { createUseStyles } from "react-jss";
+import { Figure } from "../../../../lib/src";
 import PaperBox from "../../shared/PaperBox";
+import { GameConfig } from "./GameMain";
 
 const useStyles = createUseStyles({
   wrapper: {
@@ -11,14 +13,17 @@ const useStyles = createUseStyles({
 });
 
 type Props = {
-  next: string;
+  config: GameConfig;
+  next: Figure | null;
 };
 
-function GameRightSection({ next }: Props) {
+function GameRightSection({ config, next }: Props) {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
-      <PaperBox title={'Next'} val={next}></PaperBox>
+      <PaperBox title={'Next'}>
+        lalala
+      </PaperBox>
     </div>
   );
 }
