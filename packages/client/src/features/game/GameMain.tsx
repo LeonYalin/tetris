@@ -51,12 +51,16 @@ function GamePage() {
   const classes = useStyles();
 
   useEffect(() => {
+    document.addEventListener('keydown', e => {
+      gm.handleKeyboardEvent(e.keyCode);
+    });
+
     const gm = gameManager.getInstance();
     gm.startGame();
-    gm.gameData$.subscribe(data => {
-      console.log(data);
+    gm.gameState$.subscribe(data => {
+      // console.log(data);
       setTimeout(() => {
-        dispatch(gameActions.setGameInitialState(data));
+        dispatch(gameActions.setGameState(data));
       });
     });
     // eslint-disable-next-line

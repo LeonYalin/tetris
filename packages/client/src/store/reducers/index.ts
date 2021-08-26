@@ -1,5 +1,5 @@
 import { Reducer } from 'use-immer';
-import { GameState, GAME_INITIAL_STATE } from '../../../../lib/src/engine';
+import { GameState, GAME_INITIAL_STATE } from '../../../../lib/src';
 import { gameReducer } from './game.reducer';
 import { mainInitialState, homeReducer, HomeState } from './home.reducer';
 

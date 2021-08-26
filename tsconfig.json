@@ -6,12 +6,12 @@
     "composite": true,
     "declaration": true,
     "paths": {
-      "@tetris-game/client": ["packages/client/src"],
-      "@tetris-game/client/*": ["packages/client/src/*"],
-      "@tetris-game/server": ["packages/server/src"],
-      "@tetris-game/server/*": ["packages/server/src/*"],
-      "@tetris-game/lib": ["packages/lib/src"],
-      "@tetris-game/lib/*": ["packages/lib/src/*"],
+      "@client": ["packages/client/src"],
+      "@client/*": ["packages/client/src/*"],
+      "@server": ["packages/server/src"],
+      "@server/*": ["packages/server/src/*"],
+      "@lib": ["packages/lib/src"],
+      "@lib/*": ["packages/lib/src/*"],
     }
   }
 }

@@ -1,23 +1,18 @@
-import { Observable } from 'rxjs';
-import { startGame, pauseGame, endGame, GameState, gameData$ } from './engine';
+import { startGame, pauseGame, endGame } from './engine';
+import { gameState$ } from './state';
+import { handleKeyboardEvent } from './boardEvents';
 
-export interface GameManager {
-  startGame: () => void;
-  pauseGame: () => void;
-  endGame: () => void;
-  gameData$: Observable<GameState>;
-}
-
-function initGameManager(): GameManager {
+function initGameManager() {
   return {
     startGame,
     pauseGame,
     endGame,
-    gameData$,
+    handleKeyboardEvent,
+    gameState$,
   };
 }
 
-let instance: GameManager | null = null;
+let instance: ReturnType<typeof initGameManager> | null = null;
 
 export const gameManager = {
   getInstance() {
