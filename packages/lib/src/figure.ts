@@ -12,8 +12,10 @@ export enum FigureType {
   S = 'S',
   T = 'T',
   Z = 'Z',
-  EMPTY = 'EMPTY',
+  EMPTY = '-',
 }
+
+export type FigureRotation = 0 | 1 | 2 | 3;
 
 export interface Figure {
   type: FigureType;
@@ -239,8 +241,8 @@ export const figuresByType: Record<FigureType, Figure> = {
   },
 };
 
-export function createRandomFigure(): Figure {
+export function createRandomFigure(): [Figure, Point, FigureRotation] {
   const values = Object.values(FigureType);
   const i = getRandomInt(0, values.length);
-  return figuresByType[values[i]];
+  return [figuresByType[values[i]], { x: 3, y: 0 }, 0];
 }

@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
     width: (props: Props) => `${props.size}px`,
     height: (props: Props) => `${props.size}px`,
     background: (props: Props) => figuresByType[props.type].color,
+    boxShadow: (props: Props) => (props.type === FigureType.EMPTY ? 'none' : `inset 0 0 5px rgb(0 0 0 / 50%)`),
     border: '1px solid lightgrey',
   },
 });

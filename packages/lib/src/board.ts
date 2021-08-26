@@ -9,6 +9,16 @@ export interface Board {
   cells: FigureType[][];
 }
 
+export enum BoardAction {
+  ADD_FIGURE,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  ROTATE_LEFT,
+  ROTATE_RIGHT,
+  STEP_ONE_LINE,
+  PUT_DOWN,
+}
+
 export function createBoard(size: [number, number] = DEFAULTS.size): Board {
   return {
     size,
