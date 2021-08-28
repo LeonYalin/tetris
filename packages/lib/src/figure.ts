@@ -1,5 +1,3 @@
-// import { BoardColor } from './board';
-
 import { Board } from './board';
 import { getRandomInt } from './util';
 
@@ -18,10 +16,23 @@ export enum FigureType {
 
 export type FigureRotation = 0 | 1 | 2 | 3;
 
+export enum Direction {
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+  UP = 'UP',
+  DOWN = 'DOWN',
+}
+
 export interface Figure {
   type: FigureType;
   color: string;
   cells: [Point[], Point[], Point[], Point[]];
+}
+
+export interface FigureExt {
+  figure: Figure;
+  figurePos: Point;
+  figureRot: FigureRotation;
 }
 
 export const figuresByType: Record<FigureType, Figure> = {
@@ -248,8 +259,23 @@ export function createRandomFigure(): [Figure, Point, FigureRotation] {
   return [figuresByType[values[i]], { x: 3, y: 0 }, 0];
 }
 
-export function getFigureCells(figure: Figure, figureRot: FigureRotation, extraRotation = 0) {
-  return figure.cells[(figureRot + extraRotation) % figure.cells.length];
+export function rotateFigureCells(figureExt: FigureExt) {
+  return figureExt.figure.cells[figureExt.figureRot % figureExt.figure.cells.length];
+}
+
+export function moveIsOutOfBounds(board: Board, figureExt: FigureExt, direction: Direction) {
+  const cells = figureExt.figure.cells[figureExt.figureRot];
+  const xCoords = cells.map(cell => cell.x);
+  const minX = figureExt.figurePos.x + Math.min(...xCoords);
+  const maxX = figureExt.figurePos.x + Math.max(...xCoords);
+  return direction === Direction.LEFT ? minX - 1 < 0 : maxX + 1 >= board.size[1];
+}
+
+export function moveFigurePos(figurePos: Point, direction: Direction): Point {
+  return {
+    x: figurePos.x + (direction === Direction.LEFT ? -1 : 1),
+    y: figurePos.y,
+  };
 }
 
 export function getFigureCellOnBoard(figurePos: Point, figureCell: Point, board: Board) {

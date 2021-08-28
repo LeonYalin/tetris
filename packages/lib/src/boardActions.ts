@@ -1,6 +1,17 @@
 import { cloneDeep } from 'lodash';
 import { Board } from './board';
-import { Figure, FigureRotation, FigureType, getFigureCellOnBoard, getFigureCells, Point, setFigureCellOnBoardVal } from './figure';
+import {
+  Figure,
+  FigureRotation,
+  FigureType,
+  getFigureCellOnBoard,
+  rotateFigureCells,
+  setFigureCellOnBoardVal,
+  moveIsOutOfBounds,
+  FigureExt,
+  Direction,
+  moveFigurePos,
+} from './figure';
 
 export enum BoardAction {
   ADD_FIGURE,
@@ -12,31 +23,51 @@ export enum BoardAction {
   NONE,
 }
 
-export type BoardActionConfig = { figure: Figure; figurePos: Point; figureRot: FigureRotation; action: BoardAction };
-
-export function runBoardAction(board: Board, config: BoardActionConfig): [board: Board, error: boolean] {
-  if (canApplyBoardAction(board, config)) {
-    const nextBoard = applyBoardAction(board, config);
+export function runBoardAction(board: Board, figureExt: FigureExt, action: BoardAction): [board: Board, error: boolean] {
+  if (canApplyBoardAction(board, figureExt, action)) {
+    const nextBoard = applyBoardAction(board, figureExt, action);
     return [nextBoard, false];
   } else {
     return [board, true];
   }
 }
 
-function canApplyBoardAction(board: Board, config: BoardActionConfig): boolean {
+function canApplyBoardAction(board: Board, figureExt: FigureExt, action: BoardAction): boolean {
   const nextBoard = cloneDeep(board);
-  switch (config.action) {
+  switch (action) {
     case BoardAction.ADD_FIGURE: {
-      const cells = getFigureCells(config.figure, config.figureRot);
+      const cells = rotateFigureCells(figureExt);
       return cells.every(cell => {
-        return getFigureCellOnBoard(config.figurePos, cell, nextBoard) === FigureType.EMPTY;
+        return getFigureCellOnBoard(figureExt.figurePos, cell, nextBoard) === FigureType.EMPTY;
       });
     }
     case BoardAction.ROTATE: {
-      removeFigureFromBoard(nextBoard, config);
-      const rotatedCells = getFigureCells(config.figure, config.figureRot, 1);
+      removeFigureFromBoard(nextBoard, figureExt);
+      const rotatedCells = rotateFigureCells({ ...figureExt, figureRot: (Number(figureExt.figureRot) + 1) as FigureRotation });
       return rotatedCells.every(cell => {
-        return getFigureCellOnBoard(config.figurePos, cell, nextBoard) === FigureType.EMPTY;
+        return getFigureCellOnBoard(figureExt.figurePos, cell, nextBoard) === FigureType.EMPTY;
+      });
+    }
+    case BoardAction.MOVE_LEFT: {
+      if (moveIsOutOfBounds(nextBoard, figureExt, Direction.LEFT)) {
+        return false;
+      }
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.LEFT);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      return cells.every(cell => {
+        return getFigureCellOnBoard(nextFigurePos, cell, nextBoard) === FigureType.EMPTY;
+      });
+    }
+    case BoardAction.MOVE_RIGHT: {
+      if (moveIsOutOfBounds(nextBoard, figureExt, Direction.RIGHT)) {
+        return false;
+      }
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.RIGHT);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      return cells.every(cell => {
+        return getFigureCellOnBoard(nextFigurePos, cell, nextBoard) === FigureType.EMPTY;
       });
     }
     default:
@@ -44,21 +75,39 @@ function canApplyBoardAction(board: Board, config: BoardActionConfig): boolean {
   }
 }
 
-function applyBoardAction(board: Board, config: BoardActionConfig): Board {
+function applyBoardAction(board: Board, figureExt: FigureExt, action: BoardAction): Board {
   const nextBoard = cloneDeep(board);
-  switch (config.action) {
+  switch (action) {
     case BoardAction.ADD_FIGURE: {
-      const cells = getFigureCells(config.figure, config.figureRot);
+      const cells = rotateFigureCells(figureExt);
       cells.forEach(cell => {
-        setFigureCellOnBoardVal(config.figurePos, cell, nextBoard, config.figure.type);
+        setFigureCellOnBoardVal(figureExt.figurePos, cell, nextBoard, figureExt.figure.type);
       });
       break;
     }
     case BoardAction.ROTATE: {
-      removeFigureFromBoard(nextBoard, config);
-      const rotatedPoints = getFigureCells(config.figure, config.figureRot, 1);
-      rotatedPoints.forEach(cell => {
-        setFigureCellOnBoardVal(config.figurePos, cell, nextBoard, config.figure.type);
+      removeFigureFromBoard(nextBoard, figureExt);
+      const rotatedCells = rotateFigureCells({ ...figureExt, figureRot: Number(figureExt.figureRot + 1) as FigureRotation });
+      rotatedCells.forEach(cell => {
+        setFigureCellOnBoardVal(figureExt.figurePos, cell, nextBoard, figureExt.figure.type);
+      });
+      break;
+    }
+    case BoardAction.MOVE_LEFT: {
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.LEFT);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      cells.forEach(cell => {
+        setFigureCellOnBoardVal(nextFigurePos, cell, nextBoard, figureExt.figure.type);
+      });
+      break;
+    }
+    case BoardAction.MOVE_RIGHT: {
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.RIGHT);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      cells.forEach(cell => {
+        setFigureCellOnBoardVal(nextFigurePos, cell, nextBoard, figureExt.figure.type);
       });
       break;
     }
@@ -68,9 +117,9 @@ function applyBoardAction(board: Board, config: BoardActionConfig): Board {
   return nextBoard;
 }
 
-function removeFigureFromBoard(board: Board, config: BoardActionConfig) {
-  const points = config.figure.cells[config.figureRot];
+function removeFigureFromBoard(board: Board, figureExt: FigureExt) {
+  const points = figureExt.figure.cells[figureExt.figureRot];
   points.forEach(cell => {
-    setFigureCellOnBoardVal(config.figurePos, cell, board, FigureType.EMPTY);
+    setFigureCellOnBoardVal(figureExt.figurePos, cell, board, FigureType.EMPTY);
   });
 }

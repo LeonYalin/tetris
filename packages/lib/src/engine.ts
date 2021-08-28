@@ -1,6 +1,6 @@
 import { createBoard } from './board';
-import { createRandomFigure } from './figure';
-import { BoardAction, BoardActionConfig, runBoardAction } from './boardActions';
+import { createRandomFigure, FigureExt } from './figure';
+import { BoardAction, runBoardAction } from './boardActions';
 import { setGameState } from './state';
 
 export function startGame() {
@@ -9,8 +9,8 @@ export function startGame() {
   const [next] = createRandomFigure();
 
   const board = createBoard();
-  const config: BoardActionConfig = { figure: curr, figurePos: currPos, figureRot: currRot, action: BoardAction.ADD_FIGURE };
-  const [nextBoard, error] = runBoardAction(board, config);
+  const figureExt: FigureExt = { figure: curr, figurePos: currPos, figureRot: currRot };
+  const [nextBoard, error] = runBoardAction(board, figureExt, BoardAction.ADD_FIGURE);
   if (!error) {
     setGameState({ board: nextBoard, curr, next, currPos, currRot });
   }
