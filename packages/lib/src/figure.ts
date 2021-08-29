@@ -266,16 +266,33 @@ export function rotateFigureCells(figureExt: FigureExt) {
 export function moveIsOutOfBounds(board: Board, figureExt: FigureExt, direction: Direction) {
   const cells = figureExt.figure.cells[figureExt.figureRot];
   const xCoords = cells.map(cell => cell.x);
+  const yCoords = cells.map(cell => cell.y);
   const minX = figureExt.figurePos.x + Math.min(...xCoords);
   const maxX = figureExt.figurePos.x + Math.max(...xCoords);
-  return direction === Direction.LEFT ? minX - 1 < 0 : maxX + 1 >= board.size[1];
+  const maxY = figureExt.figurePos.y + Math.max(...yCoords);
+  switch (direction) {
+    case Direction.LEFT:
+      return minX - 1 < 0;
+    case Direction.RIGHT:
+      return maxX + 1 >= board.size[1];
+    case Direction.DOWN:
+      return maxY + 1 >= board.size[0];
+    default:
+      return true;
+  }
 }
 
 export function moveFigurePos(figurePos: Point, direction: Direction): Point {
-  return {
-    x: figurePos.x + (direction === Direction.LEFT ? -1 : 1),
-    y: figurePos.y,
-  };
+  switch (direction) {
+    case Direction.LEFT:
+      return { x: figurePos.x - 1, y: figurePos.y };
+    case Direction.RIGHT:
+      return { x: figurePos.x + 1, y: figurePos.y };
+    case Direction.DOWN:
+      return { x: figurePos.x, y: figurePos.y + 1 };
+    default:
+      return figurePos;
+  }
 }
 
 export function getFigureCellOnBoard(figurePos: Point, figureCell: Point, board: Board) {

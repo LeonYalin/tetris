@@ -15,11 +15,12 @@ const useStyles = createUseStyles({
 type Props = {
   type: FigureType;
   size: number;
+  style?: React.CSSProperties;
 };
 
 function FigureCell(props: Props) {
   const classes = useStyles(props);
-  return <div className={classes.wrapper}></div>;
+  return <div className={classes.wrapper} style={props.style}></div>;
 }
 
 export default memo(FigureCell);

@@ -32,13 +32,11 @@ export function handleKeyboardEvent(keyCode: KeyCode) {
       break;
     }
     case KeyCode.DOWN_ARROW: {
-      console.log('down pressed');
-      // gm.handleGameEvent(keyCode);
-      break;
-    }
-    case KeyCode.SPACE: {
-      console.log('space pressed');
-      // gm.handleGameEvent(keyCode);
+      const [nextBoard, error] = runBoardAction(board, figureExt, BoardAction.MOVE_DOWN);
+      if (!error) {
+        const nextPos = { x: currPos.x, y: currPos.y + 1 };
+        setGameState({ board: nextBoard, currPos: nextPos });
+      }
       break;
     }
     default:

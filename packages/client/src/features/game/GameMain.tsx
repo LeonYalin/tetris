@@ -25,13 +25,13 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
   },
   gameWrapper: {
-    width: '600px',
+    width: '660px',
     height: '600px',
     display: 'grid',
     gridTemplateAreas: `
     'left center right'
     `,
-    gridTemplateColumns: '150px 300px 150px',
+    gridTemplateColumns: '180px 300px 180px',
     gridTemplateRows: '600px',
   },
   left: {

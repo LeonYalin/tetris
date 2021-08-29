@@ -18,8 +18,7 @@ export enum BoardAction {
   ROTATE,
   MOVE_LEFT,
   MOVE_RIGHT,
-  STEP_ONE_LINE,
-  PUT_DOWN,
+  MOVE_DOWN,
   NONE,
 }
 
@@ -70,6 +69,17 @@ function canApplyBoardAction(board: Board, figureExt: FigureExt, action: BoardAc
         return getFigureCellOnBoard(nextFigurePos, cell, nextBoard) === FigureType.EMPTY;
       });
     }
+    case BoardAction.MOVE_DOWN: {
+      if (moveIsOutOfBounds(nextBoard, figureExt, Direction.DOWN)) {
+        return false;
+      }
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.DOWN);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      return cells.every(cell => {
+        return getFigureCellOnBoard(nextFigurePos, cell, nextBoard) === FigureType.EMPTY;
+      });
+    }
     default:
       return false;
   }
@@ -105,6 +115,15 @@ function applyBoardAction(board: Board, figureExt: FigureExt, action: BoardActio
     case BoardAction.MOVE_RIGHT: {
       removeFigureFromBoard(nextBoard, figureExt);
       const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.RIGHT);
+      const cells = figureExt.figure.cells[figureExt.figureRot];
+      cells.forEach(cell => {
+        setFigureCellOnBoardVal(nextFigurePos, cell, nextBoard, figureExt.figure.type);
+      });
+      break;
+    }
+    case BoardAction.MOVE_DOWN: {
+      removeFigureFromBoard(nextBoard, figureExt);
+      const nextFigurePos = moveFigurePos(figureExt.figurePos, Direction.DOWN);
       const cells = figureExt.figure.cells[figureExt.figureRot];
       cells.forEach(cell => {
         setFigureCellOnBoardVal(nextFigurePos, cell, nextBoard, figureExt.figure.type);
