@@ -259,8 +259,14 @@ export function createRandomFigure(): [Figure, Point, FigureRotation] {
   return [figuresByType[values[i]], { x: 3, y: 0 }, 0];
 }
 
-export function rotateFigureCells(figureExt: FigureExt) {
-  return figureExt.figure.cells[figureExt.figureRot % figureExt.figure.cells.length];
+export function rotateFigureCells(figureExt: FigureExt, extraRotation: number = 0) {
+  return figureExt.figure.cells[(figureExt.figureRot + extraRotation) % figureExt.figure.cells.length];
+}
+
+export function rotateIsOutOfBounds(board: Board, figureExt: FigureExt) {
+  const cells = rotateFigureCells(figureExt, 1);
+  const maxY = figureExt.figurePos.y + Math.max(...cells.map(cell => cell.y));
+  return maxY + 1> board.size[0];
 }
 
 export function moveIsOutOfBounds(board: Board, figureExt: FigureExt, direction: Direction) {

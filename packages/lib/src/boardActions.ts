@@ -1,8 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { Board } from './board';
 import {
-  Figure,
-  FigureRotation,
   FigureType,
   getFigureCellOnBoard,
   rotateFigureCells,
@@ -11,6 +9,7 @@ import {
   FigureExt,
   Direction,
   moveFigurePos,
+  rotateIsOutOfBounds,
 } from './figure';
 
 export enum BoardAction {
@@ -41,8 +40,11 @@ function canApplyBoardAction(board: Board, figureExt: FigureExt, action: BoardAc
       });
     }
     case BoardAction.ROTATE: {
+      if (rotateIsOutOfBounds(nextBoard, figureExt)) {
+        return false;
+      }
       removeFigureFromBoard(nextBoard, figureExt);
-      const rotatedCells = rotateFigureCells({ ...figureExt, figureRot: (Number(figureExt.figureRot) + 1) as FigureRotation });
+      const rotatedCells = rotateFigureCells(figureExt, 1);
       return rotatedCells.every(cell => {
         return getFigureCellOnBoard(figureExt.figurePos, cell, nextBoard) === FigureType.EMPTY;
       });
@@ -97,7 +99,7 @@ function applyBoardAction(board: Board, figureExt: FigureExt, action: BoardActio
     }
     case BoardAction.ROTATE: {
       removeFigureFromBoard(nextBoard, figureExt);
-      const rotatedCells = rotateFigureCells({ ...figureExt, figureRot: Number(figureExt.figureRot + 1) as FigureRotation });
+      const rotatedCells = rotateFigureCells(figureExt, 1);
       rotatedCells.forEach(cell => {
         setFigureCellOnBoardVal(figureExt.figurePos, cell, nextBoard, figureExt.figure.type);
       });
