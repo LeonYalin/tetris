@@ -1,7 +1,8 @@
+import { calcBoardLinesToClear, calcLevelProgress, calcScoreByClearedLines } from './board';
 import { BoardAction, runBoardAction } from './boardActions';
-import { FigureExt, FigureRotation } from './figure';
+import { createDefaultFigurePos, createDefaultFigureRot, createRandomFigure, FigureExt, FigureRotation } from './figure';
 import { KeyCode } from './keyCode';
-import { getGameState, setGameState } from './state';
+import { getGameState, setGameState } from './gameState';
 
 export function handleKeyboardEvent(keyCode: KeyCode) {
   const { board, curr, currPos, currRot } = getGameState();
@@ -35,7 +36,32 @@ export function handleKeyboardEvent(keyCode: KeyCode) {
       const [nextBoard, error] = runBoardAction(board, figureExt, BoardAction.MOVE_DOWN);
       if (!error) {
         const nextPos = { x: currPos.x, y: currPos.y + 1 };
-        setGameState({ board: nextBoard, currPos: nextPos });
+        const { score } = getGameState();
+        setGameState({ board: nextBoard, currPos: nextPos, score: score + 1 });
+      } else {
+        const { next, lines, score, level, progress } = getGameState();
+        const [clearedBoard] = runBoardAction(board, null, BoardAction.LINE_CLEAR);
+        const clearedLines = calcBoardLinesToClear(board);
+        const newLines = lines + clearedLines;
+        const newScore = score + calcScoreByClearedLines(clearedLines);
+        const [newLevel, newProgress] = calcLevelProgress(level, newLines);
+
+        const figureExt: FigureExt = { figure: next, figurePos: createDefaultFigurePos(), figureRot: createDefaultFigureRot() };
+        const [nextBoard, error] = runBoardAction(clearedBoard, figureExt, BoardAction.ADD_FIGURE);
+        const [newNext] = createRandomFigure();
+        if (!error) {
+          setGameState({
+            board: nextBoard,
+            curr: next,
+            next: newNext,
+            currPos: figureExt.figurePos,
+            currRot: figureExt.figureRot,
+            lines: newLines,
+            score: newScore,
+            progress: newProgress,
+            level: newLevel,
+          });
+        }
       }
       break;
     }

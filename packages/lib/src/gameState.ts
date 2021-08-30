@@ -10,16 +10,20 @@ export interface GameState {
   next: Figure;
   level: number;
   score: number;
+  lines: number;
+  progress: number;
 }
 
 export const GAME_INITIAL_STATE: GameState = {
   board: { size: [0, 0], cells: [[]] },
+  next: figuresByType[FigureType.EMPTY],
   curr: figuresByType[FigureType.EMPTY],
   currPos: { x: 0, y: 0 },
   currRot: 0,
-  next: figuresByType[FigureType.EMPTY],
   level: 1,
   score: 0,
+  lines: 0,
+  progress: 0,
 };
 
 const state$ = new BehaviorSubject<GameState>(GAME_INITIAL_STATE);

@@ -253,10 +253,18 @@ export const figuresByType: Record<FigureType, Figure> = {
   },
 };
 
+export function createDefaultFigurePos(): Point {
+  return { x: 3, y: 0 };
+}
+
+export function createDefaultFigureRot(): FigureRotation {
+  return 0;
+}
+
 export function createRandomFigure(): [Figure, Point, FigureRotation] {
   const values = Object.values(FigureType);
-  const i = getRandomInt(0, values.length);
-  return [figuresByType[values[i]], { x: 3, y: 0 }, 0];
+  const i = getRandomInt(0, values.length - 1);
+  return [figuresByType[values[i]], createDefaultFigurePos(), createDefaultFigureRot()];
 }
 
 export function rotateFigureCells(figureExt: FigureExt, extraRotation: number = 0) {
@@ -266,7 +274,7 @@ export function rotateFigureCells(figureExt: FigureExt, extraRotation: number = 
 export function rotateIsOutOfBounds(board: Board, figureExt: FigureExt) {
   const cells = rotateFigureCells(figureExt, 1);
   const maxY = figureExt.figurePos.y + Math.max(...cells.map(cell => cell.y));
-  return maxY + 1> board.size[0];
+  return maxY + 1 > board.size[0];
 }
 
 export function moveIsOutOfBounds(board: Board, figureExt: FigureExt, direction: Direction) {
@@ -299,12 +307,4 @@ export function moveFigurePos(figurePos: Point, direction: Direction): Point {
     default:
       return figurePos;
   }
-}
-
-export function getFigureCellOnBoard(figurePos: Point, figureCell: Point, board: Board) {
-  return board.cells[figurePos.y + figureCell.y][figurePos.x + figureCell.x];
-}
-
-export function setFigureCellOnBoardVal(figurePos: Point, figureCell: Point, board: Board, val: FigureType) {
-  board.cells[figurePos.y + figureCell.y][figurePos.x + figureCell.x] = val;
 }

@@ -1,5 +1,5 @@
-import { startGame, pauseGame, endGame } from './engine';
-import { gameState$ } from './state';
+import { startGame, pauseGame, endGame } from './gameActions';
+import { gameState$ } from './gameState';
 import { handleKeyboardEvent } from './boardEvents';
 
 function initGameManager() {

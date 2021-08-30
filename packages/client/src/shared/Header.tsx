@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useAppState } from '../store/StoreProvider';
 import { selectHomePage } from '../store/selectors/home.selectors';
@@ -25,7 +25,6 @@ function Header() {
           {page}
         </div>
         <div className="right">
-          <Button color="primary">Login</Button>
         </div>
       </Toolbar>
     </AppBar>

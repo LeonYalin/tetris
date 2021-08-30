@@ -47,7 +47,7 @@ const useStyles = createUseStyles({
 
 function GamePage() {
   const dispatch = useAppDispatch();
-  const { board, level, score, next } = selectGameState(useAppState());
+  const { board, level, score, next, progress } = selectGameState(useAppState());
   const classes = useStyles();
 
   useEffect(() => {
@@ -58,7 +58,6 @@ function GamePage() {
     const gm = gameManager.getInstance();
     gm.startGame();
     gm.gameState$.subscribe(data => {
-      // console.log(data);
       setTimeout(() => {
         dispatch(gameActions.setGameState(data));
       });
@@ -70,7 +69,7 @@ function GamePage() {
     <div className={classes.wrapper}>
       <div className={classes.gameWrapper}>
         <div className={classes.left}>
-          <GameLeftSection level={level} score={score}></GameLeftSection>
+          <GameLeftSection level={level} score={score} progress={progress}></GameLeftSection>
         </div>
         <div className={classes.center}>
           <GameCenterSection board={board} config={config}></GameCenterSection>

@@ -12,7 +12,11 @@ const useStyles = createUseStyles({
     background: '#f5f5f5',
   },
   figureWrapper: {
-    margin: '20px 0',
+    height: '145px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

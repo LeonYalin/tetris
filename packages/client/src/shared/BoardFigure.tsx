@@ -22,8 +22,6 @@ function arrValues(cells: Point[], prop: 'x' | 'y') {
 }
 
 function cellExists(cells: Point[], x: number, y: number) {
-  console.log(cells, x, y);
-
   return cells.find(cell => cell.x === x && cell.y === y);
 }
 
