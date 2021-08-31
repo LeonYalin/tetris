@@ -253,6 +253,10 @@ export const figuresByType: Record<FigureType, Figure> = {
   },
 };
 
+export function extendFigure(figure: Figure, figurePos: Point, figureRot: FigureRotation): FigureExt {
+  return { figure, figurePos, figureRot };
+}
+
 export function createDefaultFigurePos(): Point {
   return { x: 3, y: 0 };
 }

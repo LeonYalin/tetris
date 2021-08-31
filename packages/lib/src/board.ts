@@ -7,7 +7,7 @@ export const SCORE_LINES: Record<string, number> = {
   '4': 1200,
 };
 
-export const LINES_TO_LEVEL_UP = 20;
+export const LINES_TO_LEVEL_UP = 5;
 
 export const DEFAULTS = {
   size: [20, 10] as [number, number],
@@ -65,8 +65,12 @@ export function calcScoreByClearedLines(lines: number) {
   return SCORE_LINES[String(lines)] ?? 0;
 }
 
-export function calcLevelProgress(level: number, lines: number) {
-  const nextProgress = (lines % LINES_TO_LEVEL_UP) / LINES_TO_LEVEL_UP * 100;
-  const nextLevel = lines > 0 && nextProgress === 0 ? level + 1 : level;
-  return [nextLevel, nextProgress];
+export function calcLevelProgress(prevProgress: number, level: number, lines: number) {
+  const nextProgress = ((lines % LINES_TO_LEVEL_UP) / LINES_TO_LEVEL_UP) * 100;
+  if (nextProgress === prevProgress) {
+    return [level, prevProgress];
+  } else {
+    const nextLevel = lines > 0 && nextProgress === 0 ? level + 1 : level;
+    return [nextLevel, nextProgress];
+  }
 }
