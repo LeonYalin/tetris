@@ -1,3 +1,5 @@
+import { Button } from '@material-ui/core';
+import { PauseCircleOutline } from '@material-ui/icons';
 import { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Figure } from '../../../../lib/src';
@@ -18,14 +20,20 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  menuButton: {
+    justifyContent: 'flex-start !important',
+    width: '146px',
+    marginTop: '16px !important',
+  },
 });
 
 type Props = {
   config: GameConfig;
   next: Figure;
+  pauseClick: () => void;
 };
 
-function GameRightSection({ config, next }: Props) {
+function GameRightSection({ config, next, pauseClick }: Props) {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -34,6 +42,16 @@ function GameRightSection({ config, next }: Props) {
           <BoardFigure figure={next} config={config}></BoardFigure>
         </div>
       </PaperBox>
+      <Button
+        className={classes.menuButton}
+        onClick={pauseClick}
+        variant="outlined"
+        color="primary"
+        size="large"
+        startIcon={<PauseCircleOutline />}
+      >
+        Pause
+      </Button>
     </div>
   );
 }

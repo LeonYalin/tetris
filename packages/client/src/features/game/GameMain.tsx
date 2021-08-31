@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { selectGameState } from '../../store/selectors/game.selectors';
 import { useAppDispatch, useAppState } from '../../store/StoreProvider';
@@ -8,6 +8,7 @@ import GameRightSection from './GameRightSection';
 import { gameManager } from '@tetris-game/lib/src';
 import * as gameActions from '../../store/actions/game.actions';
 import { useEffect } from 'react';
+import PauseDialog from './PauseDialog';
 
 export interface GameConfig {
   cellSize: number;
@@ -45,17 +46,20 @@ const useStyles = createUseStyles({
   },
 });
 
+const gm = gameManager.getInstance();
+
 function GamePage() {
   const dispatch = useAppDispatch();
   const { board, level, score, next, progress } = selectGameState(useAppState());
   const classes = useStyles();
+  const [pauseDialogOpen, setPauseDialogOpen] = useState(false);
+  // const [quitDialogOpen, setQuitDialogOpen] = useState(false);
 
   useEffect(() => {
     document.addEventListener('keydown', e => {
       gm.handleKeyboardEvent(e.keyCode);
     });
 
-    const gm = gameManager.getInstance();
     gm.startGame();
     gm.gameState$.subscribe(data => {
       setTimeout(() => {
@@ -64,6 +68,22 @@ function GamePage() {
     });
     // eslint-disable-next-line
   }, []);
+
+  function handlePauseClick() {
+    gm.pauseGame();
+    setPauseDialogOpen(true);
+  }
+
+  function handleCloseAndResume() {
+    gm.resumeGame();
+    setPauseDialogOpen(false);
+  }
+
+  function handleQuitClick() {
+    gm.endGame();
+    setPauseDialogOpen(false);
+    // setQuitDialogOpen(true);
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -75,9 +95,19 @@ function GamePage() {
           <GameCenterSection board={board} config={config}></GameCenterSection>
         </div>
         <div className={classes.right}>
-          <GameRightSection config={config} next={next}></GameRightSection>
+          <GameRightSection
+            config={config}
+            next={next}
+            pauseClick={handlePauseClick}
+          ></GameRightSection>
         </div>
       </div>
+      <PauseDialog
+        open={pauseDialogOpen}
+        handleClose={handleCloseAndResume}
+        handleResume={handleCloseAndResume}
+        handleQuit={handleQuitClick}
+      ></PauseDialog>
     </div>
   );
 }
