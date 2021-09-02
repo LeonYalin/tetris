@@ -68,6 +68,9 @@ export function handleKeyboardEvent(keyCode: KeyCode, config: KeyboardEventConfi
             progress: newProgress,
             level: newLevel,
           });
+        } else {
+          stopTick();
+          setGameState({ gameOver: true });
         }
       }
       startTick();

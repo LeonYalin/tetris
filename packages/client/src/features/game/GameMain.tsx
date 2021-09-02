@@ -72,7 +72,11 @@ function GamePage() {
 
     gm.startGame();
     gameSub = gm.gameState$.subscribe(data => {
-      dispatch(gameActions.setGameState(data));
+      if (data.gameOver) {
+        handleQuitClick();
+      } else {
+        dispatch(gameActions.setGameState(data));
+      }
     });
 
     return () => {
@@ -112,7 +116,7 @@ function GamePage() {
   }
 
   function handleKeydown(e: KeyboardEvent) {
-    if (e.keyCode === KeyCode.SPACE && !pausedRef) {
+    if (e.keyCode === KeyCode.SPACE && !pausedRef.current) {
       handlePauseClick();
     } else {
       gm.handleKeyboardEvent(e.keyCode);
@@ -120,11 +124,8 @@ function GamePage() {
   }
 
   function handleVisibilityChange() {
-    if (document.visibilityState === 'hidden') {
-      console.log(pausedRef);
-      if (!pausedRef) {
-        handlePauseClick();
-      }
+    if (document.visibilityState === 'hidden' && !pausedRef.current) {
+      handlePauseClick();
     }
   }
 

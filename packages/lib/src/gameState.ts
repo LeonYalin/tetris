@@ -12,6 +12,7 @@ export interface GameState {
   score: number;
   lines: number;
   progress: number;
+  gameOver: boolean;
 }
 
 export const GAME_INITIAL_STATE: GameState = {
@@ -24,6 +25,7 @@ export const GAME_INITIAL_STATE: GameState = {
   score: 0,
   lines: 0,
   progress: 0,
+  gameOver: false,
 };
 
 const state$ = new BehaviorSubject<GameState>(GAME_INITIAL_STATE);
