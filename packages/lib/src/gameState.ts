@@ -39,3 +39,7 @@ export function setGameState(nextState: Partial<GameState>) {
     ...nextState,
   });
 }
+
+export function resetGameState() {
+  setGameState({ ...GAME_INITIAL_STATE });
+}

@@ -4,4 +4,4 @@ export * from './gameActions';
 export * from './figure';
 export * from './keyCode';
 export * from './gameState';
-export * from './gameManager';
+export * from './gameAPI';

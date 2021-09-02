@@ -1,7 +1,7 @@
 import { createBoard } from './board';
 import { createRandomFigure, extendFigure } from './figure';
 import { BoardAction, runBoardAction } from './boardActions';
-import { setGameState } from './gameState';
+import { resetGameState, setGameState } from './gameState';
 import { startTick, stopTick } from './gameUpdate';
 
 export function startGame() {
@@ -11,6 +11,7 @@ export function startGame() {
   const figureExt = extendFigure(curr, currPos, currRot);
   const [nextBoard, error] = runBoardAction(board, figureExt, BoardAction.ADD_FIGURE);
   if (!error) {
+    resetGameState();
     setGameState({ board: nextBoard, curr, next, currPos, currRot });
   }
   startTick();
@@ -26,4 +27,9 @@ export function resumeGame() {
 
 export function endGame() {
   stopTick();
+}
+
+export function restartGame() {
+  endGame();
+  startGame();
 }

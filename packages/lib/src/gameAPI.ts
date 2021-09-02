@@ -1,4 +1,4 @@
-import { startGame, pauseGame, resumeGame, endGame } from './gameActions';
+import { startGame, pauseGame, resumeGame, endGame, restartGame } from './gameActions';
 import { gameState$ } from './gameState';
 import { handleKeyboardEvent } from './boardEvents';
 
@@ -8,6 +8,7 @@ function initGameManager() {
     pauseGame,
     resumeGame,
     endGame,
+    restartGame,
     handleKeyboardEvent,
     gameState$,
   };

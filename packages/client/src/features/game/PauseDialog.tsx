@@ -2,6 +2,7 @@ import { Button, Dialog } from '@material-ui/core';
 import { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 import PlayCircleFilledTwoToneIcon from '@material-ui/icons/PlayCircleFilledTwoTone';
+import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 
 const useStyles = createUseStyles({
   wrapper: {
@@ -57,7 +58,7 @@ function PauseDialog({ open, handleClose, handleResume, handleQuit }: Props) {
             variant="contained"
             color="secondary"
             size="large"
-            startIcon={<PlayCircleFilledTwoToneIcon />}
+            startIcon={<ExitToAppTwoToneIcon />}
           >
             Quit
           </Button>
