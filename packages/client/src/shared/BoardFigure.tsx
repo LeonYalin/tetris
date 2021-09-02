@@ -34,10 +34,10 @@ function BoardFigure({ figure, config }: Props) {
   return (
     <>
       {figure &&
-        xValues.map((y, i) => (
+        yValues.map((y, i) => (
           <div className={classes.row} key={`row-${i}`}>
-            {yValues.map((x, j) =>
-              cellExists(figure.cells[0], i, j) ? (
+            {xValues.map((x, j) =>
+              cellExists(figure.cells[0], j, i) ? (
                 <FigureCell type={figure.type} size={config.cellSize} key={`cell-${j}`}></FigureCell>
               ) : (
                 <FigureCell type={FigureType.EMPTY} size={config.cellSize} key={`cell-${j}`} style={emptyCellStyles}></FigureCell>
