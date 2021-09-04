@@ -13,6 +13,7 @@ import QuitDialog from './QuitDialog';
 import { Subscription } from 'rxjs';
 import { useHistory } from 'react-router-dom';
 import { AppPage } from '../../enums/appPage';
+import CountdownDialog from './CountdownDialog';
 
 export interface GameConfig {
   cellSize: number;
@@ -61,6 +62,7 @@ function GamePage() {
   const classes = useStyles();
   const [pauseDialogOpen, setPauseDialogOpen] = useState(false);
   const [quitDialogOpen, setQuitDialogOpen] = useState(false);
+  const [countdownDialogOpen, setCountdownDialogOpen] = useState(false);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeydown);
@@ -71,6 +73,7 @@ function GamePage() {
     });
 
     gm.startGame();
+    gm.pauseGame();
     gameSub = gm.gameState$.subscribe(data => {
       if (data.gameOver) {
         handleQuitClick();
@@ -78,6 +81,7 @@ function GamePage() {
         dispatch(gameActions.setGameState(data));
       }
     });
+    setCountdownDialogOpen(true);
 
     return () => {
       document.removeEventListener('keydown', handleKeydown);
@@ -86,6 +90,11 @@ function GamePage() {
     };
     // eslint-disable-next-line
   }, []);
+
+  function handleCountdownClose() {
+    gm.resumeGame();
+    setCountdownDialogOpen(false);
+  }
 
   function handlePauseClick() {
     pausedRef.current = true;
@@ -142,6 +151,7 @@ function GamePage() {
           <GameRightSection config={config} next={next} pauseClick={handlePauseClick}></GameRightSection>
         </div>
       </div>
+      <CountdownDialog open={countdownDialogOpen} handleClose={handleCountdownClose}></CountdownDialog>
       <PauseDialog
         open={pauseDialogOpen}
         handleClose={handleCloseAndResume}
