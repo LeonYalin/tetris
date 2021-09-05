@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import { RouteConfig } from 'react-router-config';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import { AppPage } from './enums/appPage';
 import Header from './shared/Header';
 import StoreProvider from './store/StoreProvider';
 
@@ -26,9 +25,6 @@ const routes: RouteConfig[] = [
 ];
 
 function App() {
-  const history = useHistory();
-  history.push(`/${AppPage.GAME}`);
-
   return (
     <StoreProvider>
       <div className="App">

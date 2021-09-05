@@ -1,7 +1,5 @@
 import { AppBar, Toolbar } from '@material-ui/core';
 import React, { memo } from 'react';
-import { useAppState } from '../store/StoreProvider';
-import { selectHomePage } from '../store/selectors/home.selectors';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -15,17 +13,14 @@ const useStyles = createUseStyles({
 });
 
 function Header() {
-  const page = selectHomePage(useAppState());
   const classes = useStyles();
   return (
     <AppBar position="static">
       <Toolbar className={classes.headerToolbar}>
         <div className="left">
           <img className={classes.appLogo} src="/tetris_logo.png" alt="Tetris logo" />
-          {page}
         </div>
-        <div className="right">
-        </div>
+        <div className="right"></div>
       </Toolbar>
     </AppBar>
   );

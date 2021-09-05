@@ -48,6 +48,7 @@ function HighScores({ current, className }: Props) {
     if (current !== null) {
       setScores(addCurrentScore(scores, current));
     }
+    // eslint-disable-next-line
   }, [current]);
   return (
     <TableContainer component={Paper} className={className ? className : ''}>

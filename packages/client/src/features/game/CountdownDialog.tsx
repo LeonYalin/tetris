@@ -38,6 +38,7 @@ function CountdownDialog(props: Props) {
         finalize(() => handleClose()),
       )
       .subscribe();
+    // eslint-disable-next-line
   }, []);
   return (
     <Dialog
