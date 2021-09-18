@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import PlayCircleFilledTwoToneIcon from '@material-ui/icons/PlayCircleFilledTwoTone';
 import EqualizerTwoToneIcon from '@material-ui/icons/EqualizerTwoTone';
-import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useHistory } from 'react-router-dom';
 import { AppPage } from '../../enums/appPage';
 import { MouseEvent, memo } from 'react';
@@ -70,16 +70,6 @@ function MainPage() {
           </Button>
           <Button
             className={classes.menuButton}
-            onClick={e => handleClick(e, AppPage.OPTIONS)}
-            variant="contained"
-            color="default"
-            size="large"
-            startIcon={<SettingsTwoToneIcon />}
-          >
-            Options
-          </Button>
-          <Button
-            className={classes.menuButton}
             onClick={e => handleClick(e, AppPage.STATS)}
             variant="contained"
             color="default"
@@ -87,6 +77,16 @@ function MainPage() {
             startIcon={<EqualizerTwoToneIcon />}
           >
             High Scores
+          </Button>
+          <Button
+            className={classes.menuButton}
+            onClick={e => handleClick(e, AppPage.HOW_TO_PLAY)}
+            variant="contained"
+            color="default"
+            size="large"
+            startIcon={<HelpOutlineIcon />}
+          >
+            How to play
           </Button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { AppBar, Toolbar } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { createUseStyles } from 'react-jss';
+import { Link } from 'react-router-dom';
 
 const useStyles = createUseStyles({
   appLogo: {
@@ -18,7 +19,9 @@ function Header() {
     <AppBar position="static">
       <Toolbar className={classes.headerToolbar}>
         <div className="left">
+        <Link to="/">
           <img className={classes.appLogo} src="/tetris_logo.png" alt="Tetris logo" />
+        </Link>
         </div>
         <div className="right"></div>
       </Toolbar>

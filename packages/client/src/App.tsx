@@ -15,8 +15,8 @@ const routes: RouteConfig[] = [
     component: React.lazy(() => import('./features/stats/StatsPage')),
   },
   {
-    path: '/options',
-    component: React.lazy(() => import('./features/options/OptionsPage')),
+    path: '/howToPlay',
+    component: React.lazy(() => import('./features/howToPlay/HowToPlayMain')),
   },
   {
     path: '/',
