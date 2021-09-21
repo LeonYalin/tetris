@@ -4,11 +4,13 @@ import { createUseStyles } from 'react-jss';
 import ReplayIcon from '@material-ui/icons/Replay';
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import { GameState } from '../../../../lib/src';
-import HighScores, { HighScore } from '../../shared/HighScores';
+import HighScores from '../../shared/HighScores';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import { HighScore } from '../../../../server/pages/api/highScores';
+import * as gameApi from '../../../../api/src/game.api';
 
 const useStyles = createUseStyles({
   wrapper: {
@@ -70,25 +72,39 @@ type Props = {
   score: GameState['score'];
   lines: GameState['lines'];
   level: GameState['level'];
-  handleRestart: () => void;
-  handleQuitConfirmed: () => void;
+  onRestart: () => void;
+  onQuitConfirm: () => void;
 };
 
-function QuitDialog({ open, score, lines, level, handleRestart, handleQuitConfirmed }: Props) {
+function QuitDialog({ open, score, lines, level, onRestart, onQuitConfirm }: Props) {
   const classes = useStyles();
   const noop = () => {};
   const date = new Date().getTime();
   const [name, setName] = useState('Player');
-  const [current, setCurrent] = useState<HighScore | null>(null);
+  const [scoreSubmitted, setScoreSubmitted] = useState<boolean>(false);
+  const [scores, setScores] = useState<HighScore[]>([]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    async function fetchScores() {
+      const res = await gameApi.getHighScores();
+      setScores(res.entities ?? []);
+    }
+    fetchScores();
+  }, []);
+
+  async function handleAddScore(score: HighScore) {
+    setScoreSubmitted(true);
+    const nextScores = [...scores, score].sort((a, b) => b.score - a.score);
+    setScores(nextScores);
+    await gameApi.addHighScore(score);
+  }
   return (
     <Dialog open={open} onClose={noop}>
       <div className={classes.wrapper}>
         <div className={classes.title}>Game over</div>
         <div className={classes.content}>
-          <HighScores current={current} className={classes.hsWrapper}></HighScores>
-          {current ? (
+          <HighScores scores={scores} className={classes.hsWrapper}></HighScores>
+          {scoreSubmitted ? (
             <div className={classes.submittedMsg}>
               <CheckCircleTwoToneIcon style={{ marginRight: '5px' }} />
               Thank you! Your score has been submitted
@@ -121,7 +137,7 @@ function QuitDialog({ open, score, lines, level, handleRestart, handleQuitConfir
                 size="large"
                 onClick={e => {
                   e.preventDefault();
-                  setCurrent({ name, score, lines, level, date, highlighted: true });
+                  handleAddScore({ name, score, lines, level, date, highlighted: true });
                 }}
               >
                 Submit
@@ -131,7 +147,7 @@ function QuitDialog({ open, score, lines, level, handleRestart, handleQuitConfir
           <div className={classes.buttonsWrapper}>
             <Button
               className={classes.menuButton}
-              onClick={handleRestart}
+              onClick={onRestart}
               variant="contained"
               color="primary"
               size="large"
@@ -141,7 +157,7 @@ function QuitDialog({ open, score, lines, level, handleRestart, handleQuitConfir
             </Button>
             <Button
               className={classes.menuButton}
-              onClick={handleQuitConfirmed}
+              onClick={onQuitConfirm}
               variant="contained"
               color="secondary"
               size="large"

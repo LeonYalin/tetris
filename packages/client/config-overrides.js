@@ -6,5 +6,6 @@ module.exports = override(
   babelInclude([
     path.resolve('src'),
     path.resolve('../lib/src'), // (2)
+    path.resolve('../api/src'), // (3)
   ]),
 );

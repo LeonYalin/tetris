@@ -1,11 +1,11 @@
 {
   "name": "@tetris-game/server",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,6 +14,7 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/node": "^16.9.4",
     "@types/react": "17.0.20",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",

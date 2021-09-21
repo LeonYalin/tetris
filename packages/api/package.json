@@ -1,0 +1,13 @@
+{
+  "name": "@tetris-game/api",
+  "version": "1.0.0",
+  "description": "API section for the tetris game",
+  "main": "src/index.ts",
+  "author": "Leon Yalin",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.4"
+  }
+}

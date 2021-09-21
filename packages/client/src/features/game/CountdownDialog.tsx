@@ -23,11 +23,11 @@ type Props = {
   texts?: string[];
   switchInterval?: number;
   open: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 };
 
 function CountdownDialog(props: Props) {
-  const { texts = ['3', '2', '1'], switchInterval = 1000, open, handleClose } = props;
+  const { texts = ['3', '2', '1'], switchInterval = 1000, open, onClose: handleClose } = props;
   const classes = useStyles({ count: texts.length, theme: undefined });
   const [currText, setCurrText] = useState(texts[0] || '');
   useEffect(() => {

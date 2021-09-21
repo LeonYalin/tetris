@@ -76,7 +76,7 @@ function GamePage() {
     gm.pauseGame();
     gameSub = gm.gameState$.subscribe(data => {
       if (data.gameOver) {
-        handleQuitClick();
+        handleQuit();
       } else {
         dispatch(gameActions.setGameState(data));
       }
@@ -108,13 +108,13 @@ function GamePage() {
     setPauseDialogOpen(false);
   }
 
-  function handleQuitClick() {
+  function handleQuit() {
     gm.endGame();
     setPauseDialogOpen(false);
     setQuitDialogOpen(true);
   }
 
-  function handleRestartClick() {
+  function handleRestart() {
     pausedRef.current = false;
     gm.restartGame();
     setQuitDialogOpen(false);
@@ -151,20 +151,20 @@ function GamePage() {
           <GameRightSection config={config} next={next} pauseClick={handlePauseClick}></GameRightSection>
         </div>
       </div>
-      <CountdownDialog open={countdownDialogOpen} handleClose={handleCountdownClose}></CountdownDialog>
+      <CountdownDialog open={countdownDialogOpen} onClose={handleCountdownClose}></CountdownDialog>
       <PauseDialog
         open={pauseDialogOpen}
-        handleClose={handleCloseAndResume}
-        handleResume={handleCloseAndResume}
-        handleQuit={handleQuitClick}
+        onClose={handleCloseAndResume}
+        onResume={handleCloseAndResume}
+        onQuit={handleQuit}
       ></PauseDialog>
       <QuitDialog
         open={quitDialogOpen}
         score={score}
         lines={lines}
         level={level}
-        handleRestart={handleRestartClick}
-        handleQuitConfirmed={handleQuitConfirm}
+        onRestart={handleRestart}
+        onQuitConfirm={handleQuitConfirm}
       ></QuitDialog>
     </div>
   );

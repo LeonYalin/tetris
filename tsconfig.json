@@ -1,7 +1,6 @@
 {
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "baseUrl": ".",
     "strict": true,
     "composite": true,
     "declaration": true,
@@ -13,13 +12,16 @@
     ],
     "module": "esnext",
     "moduleResolution": "node",
+    "baseUrl": ".",
     "paths": {
       "@client": ["packages/client/src"],
       "@client/*": ["packages/client/src/*"],
-      "@server": ["packages/server/src"],
-      "@server/*": ["packages/server/src/*"],
+      "@server": ["packages/server/pages/src"],
+      "@server/*": ["packages/server/pages/src/*"],
       "@lib": ["packages/lib/src"],
       "@lib/*": ["packages/lib/src/*"],
+      "@api": ["packages/api/src"],
+      "@api/*": ["packages/api/src/*"],
     }
   }
 }

@@ -30,21 +30,21 @@ const useStyles = createUseStyles({
 
 type Props = {
   open: boolean;
-  handleClose: () => void;
-  handleResume: () => void;
-  handleQuit: () => void;
+  onClose: () => void;
+  onResume: () => void;
+  onQuit: () => void;
 };
 
-function PauseDialog({ open, handleClose, handleResume, handleQuit }: Props) {
+function PauseDialog({ open, onClose, onResume, onQuit }: Props) {
   const classes = useStyles();
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={onClose}>
       <div className={classes.wrapper}>
         <div className={classes.title}>Paused</div>
         <div className={classes.content}>
           <Button
             className={classes.menuButton}
-            onClick={handleResume}
+            onClick={onResume}
             variant="contained"
             color="primary"
             size="large"
@@ -54,7 +54,7 @@ function PauseDialog({ open, handleClose, handleResume, handleQuit }: Props) {
           </Button>
           <Button
             className={classes.menuButton}
-            onClick={handleQuit}
+            onClick={onQuit}
             variant="contained"
             color="secondary"
             size="large"
