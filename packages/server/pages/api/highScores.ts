@@ -31,8 +31,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
       res.status(200).json({ code: 0, entities: getScores() });
       break;
     case 'POST':
-      addScore(req.body);
-      res.status(200).json({ code: 0, entities: [req.body] });
+      const { score, reset } = req.body;
+      const nextScores = addScore(score, reset);
+      res.status(200).json({ code: 0, entities: nextScores });
       break;
     default:
       res.status(200).json({ code: 0 });
@@ -40,17 +41,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
   }
 }
 
-function addScore(score: HighScore) {
+function addScore(score: HighScore, reset: boolean) {
   const hs = JSON.parse(fs.readFileSync('./pages/highScores.json', 'utf8')) as HighScore[];
   const scores = hs && hs.length ? hs : DEFAULT_SCORES;
-  const nextScores = [...scores, score].sort((a, b) => b.score - a.score);
+  const nextScores = reset ? DEFAULT_SCORES : [...scores, score].sort((a, b) => b.score - a.score);
 
   try {
     fs.writeFileSync('./pages/highScores.json', JSON.stringify(nextScores));
-    console.log('write complete');
   } catch (err) {
     console.log('write error: ' + err);
   }
+  return nextScores;
 }
 
 function getScores() {

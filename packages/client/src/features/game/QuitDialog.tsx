@@ -94,7 +94,7 @@ function QuitDialog({ open, score, lines, level, onRestart, onQuitConfirm }: Pro
 
   async function handleAddScore(score: HighScore) {
     setScoreSubmitted(true);
-    const nextScores = [...scores, score].sort((a, b) => b.score - a.score);
+    const nextScores = [...scores, { ...score, highlighted: true }].sort((a, b) => b.score - a.score);
     setScores(nextScores);
     await gameApi.addHighScore(score);
   }
@@ -137,7 +137,7 @@ function QuitDialog({ open, score, lines, level, onRestart, onQuitConfirm }: Pro
                 size="large"
                 onClick={e => {
                   e.preventDefault();
-                  handleAddScore({ name, score, lines, level, date, highlighted: true });
+                  handleAddScore({ name, score, lines, level, date });
                 }}
               >
                 Submit

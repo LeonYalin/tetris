@@ -1,6 +1,10 @@
+import { Button } from '@material-ui/core';
 import { memo } from 'react';
 import { createUseStyles } from 'react-jss';
 import PaperBox from '../../shared/PaperBox';
+import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
+import { AppPage } from '../../enums/appPage';
+import { useHistory } from 'react-router';
 
 const useStyles = createUseStyles({
   wrapper: {
@@ -24,9 +28,15 @@ const useStyles = createUseStyles({
     color: 'slategrey',
     marginTop: '20px',
   },
+  sectionRight: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '20px',
+  },
 });
 
 function HowToPlayMain() {
+  const history = useHistory();
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -50,6 +60,17 @@ function HowToPlayMain() {
           </div>
           <div className={classes.section}>
             <span className={classes.title}>Game Over</span>- Stack the Tetriminos too high and the game is over!
+          </div>
+          <div className={classes.sectionRight}>
+            <Button
+              onClick={e => history.push(`/${AppPage.HOME}`)}
+              variant="contained"
+              color="primary"
+              size="large"
+              startIcon={<HomeTwoToneIcon />}
+            >
+              Home
+            </Button>
           </div>
         </PaperBox>
       </div>

@@ -12,7 +12,7 @@ const routes: RouteConfig[] = [
   },
   {
     path: '/stats',
-    component: React.lazy(() => import('./features/stats/StatsPage')),
+    component: React.lazy(() => import('./features/highScores/HighScoresMain')),
   },
   {
     path: '/howToPlay',
