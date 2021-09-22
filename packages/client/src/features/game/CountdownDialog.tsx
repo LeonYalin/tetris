@@ -23,7 +23,7 @@ const useStyles = createUseStyles({
     fontSize: '100px',
     animationName: '$blinker',
     animationDuration: `${animDur}s`,
-    animationTimingFunction: 'ease-in-out;',
+    animationTimingFunction: 'ease-in-out',
     animationIterationCount: ({ count }: { count: number }) => `${count}`,
   },
 });
