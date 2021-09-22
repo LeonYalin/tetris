@@ -9,8 +9,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import { HighScore } from '../../../../server/pages/api/highScores';
 import * as gameApi from '../../../../api/src/game.api';
+import { HighScore } from '../../../../api/src';
 
 const useStyles = createUseStyles({
   wrapper: {

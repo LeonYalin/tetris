@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { memo } from 'react';
 import { createUseStyles } from 'react-jss';
-import { HighScore } from '../../../server/pages/api/highScores';
+import { HighScore } from '../../../api/src';
 
 const useStyles = createUseStyles({
   table: {

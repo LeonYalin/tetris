@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { HighScore } from '../../../../server/pages/api/highScores';
 import HighScores from '../../shared/HighScores';
 import PaperBox from '../../shared/PaperBox';
 import * as gameApi from '../../../../api/src/game.api';
@@ -10,6 +9,7 @@ import { Button, Snackbar } from '@material-ui/core';
 import HomeTwoToneIcon from '@material-ui/icons/HomeTwoTone';
 import RestoreIcon from '@material-ui/icons/Restore';
 import MuiAlert from '@material-ui/lab/Alert';
+import { HighScore } from '../../../../api/src';
 
 const useStyles = createUseStyles({
   wrapper: {

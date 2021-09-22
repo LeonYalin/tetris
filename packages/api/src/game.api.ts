@@ -1,6 +1,6 @@
-import { HighScore } from '../../server/pages/api/highScores';
 import { EntityResponse } from '../../api/src';
 import { httpGet, httpPost } from './http';
+import { HighScore } from './interfaces/EntityResponse';
 
 export async function getHighScores() {
   const res = await httpGet('api/highScores');
